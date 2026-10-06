@@ -23,9 +23,8 @@ export default function FlowSection() {
   }, [flowKey, flowNonce]);
 
   useEffect(() => {
-    const timer = lockTimer.current;
     return () => {
-      if (timer) clearTimeout(timer);
+      if (lockTimer.current) clearTimeout(lockTimer.current);
     };
   }, []);
 
