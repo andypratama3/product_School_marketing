@@ -644,6 +644,7 @@ export const features: Feature[] = [
     icon: 'user-cog',
     description: 'CRUD user + role Spatie.',
     users: 'Superadmin',
+    flow: 'user-kelola',
     capabilities: ['UserController', 'Spatie roles', 'User management'],
   },
   {
@@ -653,6 +654,7 @@ export const features: Feature[] = [
     icon: 'shield',
     description: 'Role dashboard dan middleware.',
     users: 'Superadmin',
+    flow: 'role-kelola',
     capabilities: ['RoleController', 'role_or_permission middleware', 'Role dashboard'],
   },
   {
@@ -662,6 +664,7 @@ export const features: Feature[] = [
     icon: 'key-round',
     description: 'Permission dari route, disinkronkan CLI.',
     users: 'Superadmin',
+    flow: 'perm-kelola',
     capabilities: ['±380 permission', 'ListRouteCommand sync', 'app:list-route'],
   },
   {
@@ -671,6 +674,7 @@ export const features: Feature[] = [
     icon: 'lock',
     description: '34 policy, scope guru ke kelas.',
     users: 'Superadmin',
+    flow: 'rbac-scope',
     capabilities: ['34 policies', 'TeacherScopedData', 'Data scoping kelas'],
   },
   {
@@ -680,6 +684,7 @@ export const features: Feature[] = [
     icon: 'log-in',
     description: 'Web session, token API, mobile.',
     users: 'Semua pengguna',
+    flow: 'sanctum-auth',
     capabilities: ['Breeze + Sanctum', '/sanctum/token', '/mobile/*', 'Reset password'],
   },
   {
@@ -689,6 +694,7 @@ export const features: Feature[] = [
     icon: 'list-todo',
     description: 'Tugas, kategori, dependensi, komentar, progress, timesheet start/stop.',
     users: 'Admin & staf',
+    flow: 'tasks-waktu',
     capabilities: [
       'TaskController workflow lengkap',
       'TimesheetController start / stop / active',
@@ -703,6 +709,7 @@ export const features: Feature[] = [
     icon: 'sliders-horizontal',
     description: 'Konfigurasi aplikasi, jam kerja, formula nilai, preferensi notifikasi.',
     users: 'Superadmin',
+    flow: 'setting-sistem',
     capabilities: [
       'KonfigurasiSistemController (sync + validate)',
       'WorkHoursController (insentif/denda)',
