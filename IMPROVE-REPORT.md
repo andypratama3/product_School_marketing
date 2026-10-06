@@ -127,7 +127,7 @@
 | IMP-09 | info saja (tanpa perubahan) | — | components/EcosystemMapClient.tsx |
 | REQ-01 | selesai (atas instruksi user) | f4a2651 | components/EcosystemMapClient.tsx |
 | REQ-02 | dibatalkan (user: "bukan begitu maksud", revert f5b4342) | — | — |
-| REQ-03 | selesai (atas instruksi user) | 6d4cc3c | components/EcosystemMapClient.tsx |
+| REQ-03 | dibatalkan (user: tetap di Akademik, revert 904b00e) | — | — |
 
 ## Bukti no-change
 - sha256 frozen surface: **OK** (9/9 file cocok, `shasum -c /tmp/frozen.sha`).
