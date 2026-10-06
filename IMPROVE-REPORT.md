@@ -97,6 +97,12 @@
 - Usulan minimal: default `findIndex((c) => c.id === 'Akademik')` (fallback 0 sudah mencakupnya).
 - Catatan: ini mengubah state visual awal → dikeluarkan dari pembuktian no-change, dikerjakan di Fase 2 atas instruksi eksplisit.
 
+### REQ-03 — Tur otomatis node aktif bergantian
+- File: components/EcosystemMapClient.tsx (state `paused` + interval + handler jeda di `.map`)
+- Yang diminta: node aktif berpindah otomatis satu-satu (Akademik, Siswa, dst) seperti tur.
+- Perilaku: interval 2500ms; jeda saat pointer/fokus masuk peta, lanjut saat keluar; mati total saat reduced-motion. Spawn edge-flow + panel info mengikuti karena terikat `active`.
+- Catatan: mengubah perilaku visual berkala → di luar garansi no-change, dikerjakan atas instruksi eksplisit.
+
 ## Saran (butuh persetujuan pemilik)
 - Tambah `README.md` singkat (cara dev/build) — tidak ada README saat ini.
 - `.gitignore` sudah ada dan benar (`node_modules/ .next/ *.tsbuildinfo .DS_Store`); tidak ada file terlarang yang ter-commit (terverifikasi via `git ls-files`).
@@ -121,6 +127,7 @@
 | IMP-09 | info saja (tanpa perubahan) | — | components/EcosystemMapClient.tsx |
 | REQ-01 | selesai (atas instruksi user) | f4a2651 | components/EcosystemMapClient.tsx |
 | REQ-02 | dibatalkan (user: "bukan begitu maksud", revert f5b4342) | — | — |
+| REQ-03 | selesai (atas instruksi user) | 6d4cc3c | components/EcosystemMapClient.tsx |
 
 ## Bukti no-change
 - sha256 frozen surface: **OK** (9/9 file cocok, `shasum -c /tmp/frozen.sha`).
