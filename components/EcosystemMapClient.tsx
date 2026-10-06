@@ -31,19 +31,6 @@ export default function EcosystemMapClient({ categories, features }: Props) {
     return idx >= 0 ? idx : 0;
   });
   const nodeRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const [paused, setPaused] = useState(false);
-
-  // Tur otomatis: node aktif bergantian selama tidak disentuh user,
-  // dan mati total saat reduced-motion. Spawn edge-flow mengikuti
-  // karena key-nya terikat `active`.
-  useEffect(() => {
-    if (paused) return;
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const tour = setInterval(() => {
-      setActive((a) => (a + 1) % categories.length);
-    }, 2500);
-    return () => clearInterval(tour);
-  }, [paused, categories.length]);
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -99,12 +86,6 @@ export default function EcosystemMapClient({ categories, features }: Props) {
           role="group"
           aria-label="Diagram ekosistem"
           onKeyDown={onKeyDown}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocus={() => setPaused(true)}
-          onBlur={(e) => {
-            if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setPaused(false);
-          }}
         >
           <div className="map-inner">
             <svg className="edges" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
