@@ -112,7 +112,7 @@ export default function FeatureDialog() {
             className="btn p"
             onClick={() => {
               setId(null);
-              openFlow(feature.flow!);
+              if (feature.flow) openFlow(feature.flow);
             }}
             aria-label="Lihat alur interaktif untuk fitur ini"
           >
