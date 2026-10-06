@@ -108,6 +108,11 @@
 - Yang diminta: saat node baru muncul satu-satu, status aktif ikut tiap node lalu berhenti di Akademik — hanya pertama kali.
 - Perilaku: observer threshold 0.25 di `#map`; interval 130ms melangkah 0→N lalu kembali ke Akademik; sentuhan user (hover/fokus) membatalkan intro; dilewati total saat reduced-motion.
 
+### REQ-05 — Aura node menyala saat panah menyentuh
+- File: components/EcosystemMapClient.tsx (state `arrived`, timer 1750ms per ganti `active`)
+- Yang diminta: kartu node baru ber-aura saat panah benar-benar menyentuhnya.
+- Perilaku: garis edge + panel info ikut `active` langsung; kelas visual `on` (aura + cincin pulse) menunggu akhir lintasan panah 1.8 dtk. Tanpa gerak, aura langsung menyala.
+
 ## Saran (butuh persetujuan pemilik)
 - Tambah `README.md` singkat (cara dev/build) — tidak ada README saat ini.
 - `.gitignore` sudah ada dan benar (`node_modules/ .next/ *.tsbuildinfo .DS_Store`); tidak ada file terlarang yang ter-commit (terverifikasi via `git ls-files`).
@@ -134,6 +139,7 @@
 | REQ-02 | dibatalkan (user: "bukan begitu maksud", revert f5b4342) | — | — |
 | REQ-03 | dibatalkan (user: tetap di Akademik, revert 904b00e) | — | — |
 | REQ-04 | selesai (atas instruksi user, commit langsung di main) | c5f334e | components/EcosystemMapClient.tsx |
+| REQ-05 | selesai (atas instruksi user) | ca548b9 | components/EcosystemMapClient.tsx |
 
 ## Bukti no-change
 - sha256 frozen surface: **OK** (9/9 file cocok, `shasum -c /tmp/frozen.sha`).
