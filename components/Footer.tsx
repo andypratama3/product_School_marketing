@@ -13,6 +13,7 @@ export default function Footer() {
       <nav aria-label="Navigasi bawah">
         <a href="#fit">Fitur</a>
         <a href="#flow">Alur</a>
+        <a href="#harga">Harga</a>
         <a href="#cta">Mulai</a>
       </nav>
       <span className="mu">© 2026 ProductSchool</span>
