@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Halaman tidak ditemukan' };
+
 export default function NotFound() {
   return (
     <main
