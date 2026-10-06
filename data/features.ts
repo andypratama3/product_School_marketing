@@ -437,6 +437,7 @@ export const features: Feature[] = [
     icon: 'message-circle',
     description: 'Kirim, webhook, template Meta.',
     users: 'Admin komunikasi',
+    flow: 'wa-sambung',
     capabilities: ['WhatsappMetaService', 'Cloud API', 'Webhook /v1/webhook', 'Template pesan'],
   },
   {
@@ -455,6 +456,7 @@ export const features: Feature[] = [
     icon: 'send',
     description: 'Tagihan, kehadiran, rapor.',
     users: 'Orang tua',
+    flow: 'wa-notif',
     capabilities: ['Tagihan', 'Kehadiran', 'RaporDistributionService', 'Job terjadwal'],
   },
   {
@@ -474,6 +476,7 @@ export const features: Feature[] = [
     icon: 'message-square',
     description: 'Respons otomatis + eskalasi admin.',
     users: 'Admin WA',
+    flow: 'wa-balas',
     capabilities: ['SmartResponseBuilder', 'Eskalasi admin', 'WhatsAppAdminRouterService'],
   },
   {
@@ -493,6 +496,7 @@ export const features: Feature[] = [
     icon: 'instagram',
     description: 'Publish feed dari ProductSchool.',
     users: 'Admin humas',
+    flow: 'ig-terbit',
     capabilities: ['InstagramPublisherService', 'Feed post', 'Media graph'],
   },
   {
@@ -502,6 +506,7 @@ export const features: Feature[] = [
     icon: 'images',
     description: 'Carousel lewat job terjadwal.',
     users: 'Admin humas',
+    flow: 'ig-carousel',
     capabilities: ['Carousel', 'Job terjadwal', 'Publish terjadwal'],
   },
   {
@@ -511,6 +516,7 @@ export const features: Feature[] = [
     icon: 'square-pen',
     description: 'Composer dan jadwal terbit.',
     users: 'Admin humas',
+    flow: 'ig-posting',
     capabilities: ['Composer postingan', 'Jadwal terbit', 'Manajemen konten'],
   },
   {
@@ -520,6 +526,7 @@ export const features: Feature[] = [
     icon: 'user-round',
     description: 'Username, foto, account ID.',
     users: 'Admin humas',
+    flow: 'ig-info',
     capabilities: ['Username', 'Foto profil', 'Account ID'],
   },
   {
@@ -529,6 +536,7 @@ export const features: Feature[] = [
     icon: 'facebook',
     description: 'FacebookPublisherService ke Page.',
     users: 'Admin humas',
+    flow: 'fb-terbit',
     capabilities: ['FacebookPublisherService', 'Page publish', 'Scheduler'],
   },
   {
