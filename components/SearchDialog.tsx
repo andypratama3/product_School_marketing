@@ -26,6 +26,22 @@ export function openFlow(key: string) {
   });
 }
 
+// Reference-counted background scroll lock so overlapping dialogs restore
+// overflow only when the last one closes.
+let scrollLocks = 0;
+let savedOverflow = '';
+
+export function lockScroll() {
+  if (scrollLocks === 0) savedOverflow = document.body.style.overflow;
+  scrollLocks++;
+  document.body.style.overflow = 'hidden';
+}
+
+export function unlockScroll() {
+  scrollLocks = Math.max(0, scrollLocks - 1);
+  if (scrollLocks === 0) document.body.style.overflow = savedOverflow;
+}
+
 // Keep Tab cycling inside an open modal dialog.
 export function trapTab(e: KeyboardEvent, root: HTMLElement | null) {
   if (e.key !== 'Tab' || !root) return;
@@ -96,15 +112,14 @@ export default function SearchDialog({
   useEffect(() => {
     if (!open) return;
     inputRef.current?.focus();
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
       trapTab(e, dialogRef.current);
     };
     window.addEventListener('keydown', onKey);
     return () => {
-      document.body.style.overflow = prevOverflow;
+      unlockScroll();
       window.removeEventListener('keydown', onKey);
     };
   }, [open, onClose]);
