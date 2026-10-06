@@ -32,6 +32,14 @@ export default function EcosystemMapClient({ categories, features }: Props) {
   });
   const nodeRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const introDone = useRef(false);
+  const introTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const cancelIntro = () => {
+    if (introTimer.current) clearInterval(introTimer.current);
+    introTimer.current = null;
+    introDone.current = true;
+  };
 
   useEffect(() => {
     const mq = matchMedia('(prefers-reduced-motion: reduce)');
@@ -40,6 +48,42 @@ export default function EcosystemMapClient({ categories, features }: Props) {
     mq.addEventListener('change', onChange);
     return () => mq.removeEventListener('change', onChange);
   }, []);
+
+  // Intro pertama: saat peta masuk layar, status aktif ikut tiap node yang
+  // muncul satu-satu lalu berhenti di Akademik. Hanya sekali; sentuhan
+  // user membatalkannya.
+  useEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const map = document.getElementById('map');
+    if (!map) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        obs.disconnect();
+        if (introDone.current) return;
+        introDone.current = true;
+        const last = categories.findIndex((c) => c.id === 'Akademik');
+        const home = last >= 0 ? last : 0;
+        let step = 0;
+        setActive(0);
+        introTimer.current = setInterval(() => {
+          step++;
+          if (step >= categories.length) {
+            cancelIntro();
+            setActive(home);
+            return;
+          }
+          setActive(step);
+        }, 130);
+      },
+      { threshold: 0.25 },
+    );
+    obs.observe(map);
+    return () => {
+      obs.disconnect();
+      cancelIntro();
+    };
+  }, [categories.length]);
 
   const category = categories[active];
 
@@ -86,6 +130,8 @@ export default function EcosystemMapClient({ categories, features }: Props) {
           role="group"
           aria-label="Diagram ekosistem"
           onKeyDown={onKeyDown}
+          onMouseEnter={cancelIntro}
+          onFocus={cancelIntro}
         >
           <div className="map-inner">
             <svg className="edges" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
