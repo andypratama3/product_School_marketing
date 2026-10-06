@@ -27,7 +27,7 @@ function edgePath(x: number, y: number) {
 
 export default function EcosystemMapClient({ categories, features }: Props) {
   const [active, setActive] = useState(() => {
-    const idx = categories.findIndex((c) => c.id === 'CMS');
+    const idx = categories.findIndex((c) => c.id === 'Akademik');
     return idx >= 0 ? idx : 0;
   });
   const nodeRefs = useRef<Array<HTMLButtonElement | null>>([]);
