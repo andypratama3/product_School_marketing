@@ -10,8 +10,6 @@ import {
   jsonLd,
 } from '@/lib/seo';
 
-const GSC = process.env.NEXT_PUBLIC_GSC_VERIFICATION;
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: SITE_TITLE, template: `%s | ${SITE_NAME}` },
@@ -47,7 +45,11 @@ export const metadata: Metadata = {
   icons: {
     icon: '/icon.svg',
   },
-  ...(GSC ? { verification: { google: GSC } } : {}),
+  verification: {
+    google:
+      process.env.NEXT_PUBLIC_GSC_VERIFICATION ||
+      'XShhQ1RuY_570n6Lv4mG5Dk38o62_KeZmWjhlSswwMg',
+  },
 };
 
 export const viewport: Viewport = {
