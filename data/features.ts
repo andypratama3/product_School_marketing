@@ -227,6 +227,7 @@ export const features: Feature[] = [
     icon: 'id-card',
     description: 'Data guru, scope kelas, API teacher.',
     users: 'TU kepegawaian',
+    flow: 'guru-data',
     capabilities: ['TeacherController', 'TeacherScopedData', 'API /teacher/*'],
   },
   {
@@ -236,6 +237,7 @@ export const features: Feature[] = [
     icon: 'users-round',
     description: 'CRUD pegawai, import, posisi.',
     users: 'TU kepegawaian',
+    flow: 'pegawai-data',
     capabilities: ['EmployeeController', 'EmployeeImportController', 'StaffPositionController'],
   },
   {
@@ -245,6 +247,7 @@ export const features: Feature[] = [
     icon: 'calendar-off',
     description: 'Pengajuan cuti, bukti, persetujuan.',
     users: 'Pegawai + atasan',
+    flow: 'cuti-aju',
     capabilities: ['LeaveRequestController', 'Bukti foto via WA bot', 'Persetujuan atasan'],
   },
   {
@@ -254,6 +257,7 @@ export const features: Feature[] = [
     icon: 'briefcase',
     description: 'Akses SDM dan gerbang konfigurasi gaji.',
     users: 'Kepala TU',
+    flow: 'sdm-peta',
     capabilities: ['Konfigurasi SDM', 'EnsureSalaryAccess', 'Posisi dan jabatan'],
   },
   {
@@ -263,6 +267,7 @@ export const features: Feature[] = [
     icon: 'settings',
     description: 'Gaji pokok, tunjangan, potongan.',
     users: 'Bendahara',
+    flow: 'gaji-aturan',
     capabilities: ['EmployeeSalaryConfiguration', 'Tunjangan struktural / fungsional / pendidikan'],
   },
   {
@@ -272,6 +277,7 @@ export const features: Feature[] = [
     icon: 'calendar-clock',
     description: 'Run penggajian per bulan / tahun pelajaran.',
     users: 'Bendahara',
+    flow: 'payroll-periode',
     capabilities: ['Payroll run per bulan', 'Ikatan tahun pelajaran', 'Status draft / processed / paid'],
   },
   {
@@ -291,6 +297,7 @@ export const features: Feature[] = [
     icon: 'history',
     description: 'Run processed / paid dan rincian.',
     users: 'Bendahara / kepala sekolah',
+    flow: 'payroll-riwayat',
     capabilities: ['Riwayat run', 'Status processed / paid', 'Payroll details'],
   },
   {
@@ -300,6 +307,7 @@ export const features: Feature[] = [
     icon: 'file-bar-chart',
     description: 'Slip PDF dan ZIP massal.',
     users: 'Pegawai (slip)',
+    flow: 'payroll-lapor',
     capabilities: ['PayrollExportService', 'Slip PDF', 'ZIP slip massal', 'Rekap laporan'],
   },
   {
