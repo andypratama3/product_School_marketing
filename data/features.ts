@@ -13,6 +13,7 @@ export const features: Feature[] = [
     icon: 'book-open',
     description: 'Struktur kurikulum: Kurikulum Merdeka, TP, P5.',
     users: 'Waka kurikulum',
+    flow: 'kurikulum',
     capabilities: ['Kurikulum Merdeka', 'Tujuan Pembelajaran (TP)', 'Projek P5', 'SubjectTpController'],
   },
   {
@@ -22,6 +23,7 @@ export const features: Feature[] = [
     icon: 'calendar-range',
     description: 'Periode akademik dan semester aktif.',
     users: 'Tata usaha akademik',
+    flow: 'tahun-ajaran',
     capabilities: ['AcademicYear model', 'SemesterHelper', 'Periode aktif dashboard'],
   },
   {
@@ -31,6 +33,7 @@ export const features: Feature[] = [
     icon: 'school',
     description: 'Kelas, rombel, promosi, dan retensi.',
     users: 'Waka kurikulum',
+    flow: 'akd-kelola',
     capabilities: ['Classroom + rombel', 'PromotionService', 'Retention siswa'],
   },
   {
@@ -40,6 +43,7 @@ export const features: Feature[] = [
     icon: 'calendar-days',
     description: 'Jadwal mingguan guru dan kelas.',
     users: 'Waka kurikulum / TU',
+    flow: 'jadwal-ajar',
     capabilities: ['ScheduleService', 'Timetable mingguan', 'Jadwal per guru'],
   },
   {
@@ -49,6 +53,7 @@ export const features: Feature[] = [
     icon: 'clipboard-check',
     description: 'Komponen, bobot, import, dan rumus nilai.',
     users: 'Guru mapel',
+    flow: 'nilai-olah',
     capabilities: ['GradeService', 'Komponen nilai', 'GradeWeightController', 'Import XLSX'],
   },
   {
@@ -74,6 +79,7 @@ export const features: Feature[] = [
     icon: 'files',
     description: 'Generate dokumen dari data sistem, bulk per kelas.',
     users: 'TU & guru',
+    flow: 'dokumen-buat',
     capabilities: ['TemplateGeneratorService', 'Variabel dinamis', 'Export PDF', 'Bulk by class'],
   },
   {
@@ -83,6 +89,7 @@ export const features: Feature[] = [
     icon: 'layout-template',
     description: 'Editor kanvas, blok, variabel, bantuan AI.',
     users: 'Admin template',
+    flow: 'kanvas-dok',
     capabilities: ['Editor kanvas drag and drop', 'Blok reusable', 'VariableResolver', 'Bantuan AI dokumen'],
   },
   {
@@ -102,6 +109,7 @@ export const features: Feature[] = [
     icon: 'heart',
     description: 'Laporan perkembangan ABK oleh shadow teacher, halaman khusus di rapor PDF.',
     users: 'Shadow teacher & kurikulum',
+    flow: 'inklusi',
     capabilities: [
       'InklusiReportCardController',
       'Template fase (config/inklusi.php)',
