@@ -130,6 +130,7 @@ export default function SearchDialog({
           id="q"
           ref={inputRef}
           placeholder="Cari fitur atau alur"
+          aria-label="Cari fitur atau alur"
           autoComplete="off"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
