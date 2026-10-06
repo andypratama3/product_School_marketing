@@ -139,7 +139,7 @@
 | REQ-02 | dibatalkan (user: "bukan begitu maksud", revert f5b4342) | — | — |
 | REQ-03 | dibatalkan (user: tetap di Akademik, revert 904b00e) | — | — |
 | REQ-04 | selesai (atas instruksi user, commit langsung di main) | c5f334e | components/EcosystemMapClient.tsx |
-| REQ-05 | selesai (atas instruksi user) | ca548b9 | components/EcosystemMapClient.tsx |
+| REQ-05 | dibatalkan (user: "kembalikan", revert e5641fa) | — | — |
 
 ## Bukti no-change
 - sha256 frozen surface: **OK** (9/9 file cocok, `shasum -c /tmp/frozen.sha`).
