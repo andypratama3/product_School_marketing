@@ -32,7 +32,6 @@ export default function EcosystemMapClient({ categories, features }: Props) {
   });
   const nodeRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [arrived, setArrived] = useState(false);
   const introDone = useRef(false);
   const introTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -49,18 +48,6 @@ export default function EcosystemMapClient({ categories, features }: Props) {
     mq.addEventListener('change', onChange);
     return () => mq.removeEventListener('change', onChange);
   }, []);
-
-  // Aura kartu node hanya menyala saat panah menyentuh node (akhir
-  // lintasan 1.8 dtk). Tanpa gerak, aura langsung menyala.
-  useEffect(() => {
-    if (reducedMotion) {
-      setArrived(true);
-      return;
-    }
-    setArrived(false);
-    const timer = setTimeout(() => setArrived(true), 1750);
-    return () => clearTimeout(timer);
-  }, [active, reducedMotion]);
 
   // Intro pertama: saat peta masuk layar, status aktif ikut tiap node yang
   // muncul satu-satu lalu berhenti di Akademik. Hanya sekali; sentuhan
@@ -209,7 +196,7 @@ export default function EcosystemMapClient({ categories, features }: Props) {
                   nodeRefs.current[i] = el;
                 }}
                 type="button"
-                className={`nd${i === active && arrived ? ' on' : ''}`}
+                className={`nd${i === active ? ' on' : ''}`}
                 style={{ left: `${c.x}%`, top: `${c.y}%` }}
                 aria-pressed={i === active}
                 aria-label={c.label}
