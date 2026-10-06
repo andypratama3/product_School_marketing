@@ -555,6 +555,7 @@ export const features: Feature[] = [
     icon: 'file-text',
     description: 'Export nilai dan batch rapor.',
     users: 'Kurikulum',
+    flow: 'lap-akademik',
     capabilities: ['GradeExport', 'Rapor batch', 'Export XLSX / PDF'],
   },
   {
@@ -564,6 +565,7 @@ export const features: Feature[] = [
     icon: 'file-bar-chart',
     description: 'Export pembayaran dan rekap tagihan.',
     users: 'Bendahara',
+    flow: 'lap-keuangan',
     capabilities: ['PaymentExport', 'Rekap tagihan', 'Export CSV / Excel'],
   },
   {
@@ -573,6 +575,7 @@ export const features: Feature[] = [
     icon: 'chart-line',
     description: 'Summary, benchmark, rekomendasi.',
     users: 'BK',
+    flow: 'analitik-siswa',
     capabilities: ['StudentAnalyticsService', 'Dashboard summary', 'Rekomendasi learning path'],
   },
   {
@@ -582,6 +585,7 @@ export const features: Feature[] = [
     icon: 'chart-no-axes-column',
     description: 'Rekap harian, bulanan, PDF.',
     users: 'Kesiswaan',
+    flow: 'analitik-hadir',
     capabilities: ['AttendanceExport', 'Rekap harian / bulanan', 'Rekap PDF'],
   },
   {
@@ -591,6 +595,7 @@ export const features: Feature[] = [
     icon: 'radio',
     description: 'KPI dashboard dan broadcast WebSocket: kehadiran, nilai, pembayaran.',
     users: 'Kepala sekolah',
+    flow: 'reverb-live',
     capabilities: ['DashboardController.getStats', 'ShouldBroadcast events', 'Laravel Reverb + Echo', 'Search global'],
   },
   {
@@ -600,6 +605,7 @@ export const features: Feature[] = [
     icon: 'sparkles',
     description: 'Narasi rapor dan bantuan operasional.',
     users: 'Guru / TU',
+    flow: 'ai-asisten',
     capabilities: ['Narasi rapor', 'Bantuan operasional', 'TemplateGeneratorService'],
   },
   {
@@ -618,6 +624,7 @@ export const features: Feature[] = [
     icon: 'file-pen',
     description: 'AI di editor template.',
     users: 'Editor template',
+    flow: 'ai-dokumen',
     capabilities: ['Bantuan editor template', 'Saran isi dokumen', 'Template AI'],
   },
   {
@@ -627,6 +634,7 @@ export const features: Feature[] = [
     icon: 'lightbulb',
     description: 'Saran penyusunan dokumen.',
     users: 'Guru',
+    flow: 'ai-saran',
     capabilities: ['Saran penyusunan dokumen', 'Bantuan konten', 'Prompt AI'],
   },
   {
