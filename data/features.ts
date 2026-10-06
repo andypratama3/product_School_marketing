@@ -317,6 +317,7 @@ export const features: Feature[] = [
     icon: 'receipt',
     description: 'Generate tagihan bulanan per siswa.',
     users: 'Bendahara',
+    flow: 'spp-tagih',
     capabilities: ['school:generate-monthly-bills', 'Tagihan SPP', 'Tagihan per bulan / tahun'],
   },
   {
@@ -336,6 +337,7 @@ export const features: Feature[] = [
     icon: 'credit-card',
     description: 'Snap/Core, callback, status transaksi.',
     users: 'Bendahara',
+    flow: 'midtrans-bayar',
     capabilities: ['MidtransService.createTransaction', 'Callback + webhook', 'Snap / Core API'],
   },
   {
@@ -345,6 +347,7 @@ export const features: Feature[] = [
     icon: 'smartphone',
     description: 'Metode bayar yang didukung gateway.',
     users: 'Orang tua',
+    flow: 'vaqr-metode',
     capabilities: ['Virtual Account', 'QRIS', 'e-Wallet'],
   },
   {
@@ -354,6 +357,7 @@ export const features: Feature[] = [
     icon: 'bell-ring',
     description: 'Update status ke orang tua.',
     users: 'Orang tua',
+    flow: 'bayar-notif',
     capabilities: ['Event pembayaran', 'Update status orang tua', 'Notifikasi channel sekolah'],
   },
   {
@@ -363,6 +367,7 @@ export const features: Feature[] = [
     icon: 'alarm-clock',
     description: 'Reminder tagihan lewat WhatsApp.',
     users: 'Orang tua',
+    flow: 'ingat-bayar',
     capabilities: ['PaymentService reminder WA', 'Job queue', 'Pesan pengingat'],
   },
   {
@@ -382,6 +387,7 @@ export const features: Feature[] = [
     icon: 'mail',
     description: 'Lead CRM mini dari landing page dengan pipeline status.',
     users: 'Panitia PPDB / marketing',
+    flow: 'leads-kelola',
     capabilities: ['LeadController updateStatus', 'LandingController.storeLead', 'Pipeline status lead'],
   },
   {
@@ -401,6 +407,7 @@ export const features: Feature[] = [
     icon: 'files',
     description: 'Halaman dan artikel publik.',
     users: 'Admin website',
+    flow: 'halaman-kelola',
     capabilities: ['Halaman publik', 'Berita / artikel', 'TemplateService.cloneTemplate'],
   },
   {
@@ -410,6 +417,7 @@ export const features: Feature[] = [
     icon: 'image',
     description: 'Galeri, hero, prestasi.',
     users: 'Admin website',
+    flow: 'media-kelola',
     capabilities: ['Gallery', 'Hero', 'Achievement', 'Media library'],
   },
   {
@@ -419,6 +427,7 @@ export const features: Feature[] = [
     icon: 'globe',
     description: 'API v2 untuk website sekolah.',
     users: 'Publik',
+    flow: 'publikasi-jadwal',
     capabilities: ['API /v2/*', 'Website sekolah', 'Data landing publik'],
   },
   {
