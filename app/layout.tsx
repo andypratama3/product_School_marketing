@@ -1,13 +1,53 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import JsonLd from '@/components/JsonLd';
+import {
+  INDEXABLE,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+  jsonLd,
+} from '@/lib/seo';
+
+const GSC = process.env.NEXT_PUBLIC_GSC_VERIFICATION;
 
 export const metadata: Metadata = {
-  title: 'ProductSchool — Sistem Sekolah Terintegrasi',
-  description:
-    'ProductSchool menyatukan akademik, keuangan, kehadiran, komunikasi, dan CMS sekolah dalam satu sistem. Jelajahi 75 fitur terverifikasi.',
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_TITLE, template: `%s | ${SITE_NAME}` },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    locale: 'id_ID',
+    url: '/',
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+  robots: INDEXABLE
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+          'max-video-preview': -1,
+        },
+      }
+    : { index: false, follow: false },
   icons: {
     icon: '/icon.svg',
   },
+  ...(GSC ? { verification: { google: GSC } } : {}),
 };
 
 export const viewport: Viewport = {
@@ -41,6 +81,7 @@ export default function RootLayout({
             __html: `try{var t=localStorage.getItem('ps-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}`,
           }}
         />
+        <JsonLd data={jsonLd} />
       </head>
       <body>{children}</body>
     </html>
