@@ -188,5 +188,6 @@ type IconProps = Omit<LucideProps, 'ref'> & { name: IconName };
 
 export function Icon({ name, ...props }: IconProps) {
   const Component = iconRegistry[name];
+  // Kontrak: semua ikon dekoratif; pemakai yang bermakna wajib punya aria-label sendiri.
   return <Component aria-hidden focusable="false" {...props} />;
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { Icon } from '@/lib/icons';
 import type { Category, Feature } from '@/lib/types';
 
@@ -27,10 +27,19 @@ function edgePath(x: number, y: number) {
 
 export default function EcosystemMapClient({ categories, features }: Props) {
   const [active, setActive] = useState(() => {
-    const idx = categories.findIndex((c) => c.id === 'CMS');
+    const idx = categories.findIndex((c) => c.id === 'Akademik');
     return idx >= 0 ? idx : 0;
   });
   const nodeRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   const category = categories[active];
 
@@ -104,22 +113,26 @@ export default function EcosystemMapClient({ categories, features }: Props) {
                     points="-1.8,-1.4 1.4,0 -1.8,1.4"
                     opacity="0"
                   >
-                    <animateMotion
-                      dur="1.8s"
-                      begin={`${k * 0.6}s`}
-                      repeatCount="indefinite"
-                      rotate="auto"
-                    >
-                      <mpath href={`#edge-${active}`} />
-                    </animateMotion>
-                    <animate
-                      attributeName="opacity"
-                      values="0;1;1;0"
-                      keyTimes="0;0.15;0.85;1"
-                      dur="1.8s"
-                      begin={`${k * 0.6}s`}
-                      repeatCount="indefinite"
-                    />
+                    {!reducedMotion && (
+                      <>
+                        <animateMotion
+                          dur="1.8s"
+                          begin={`${k * 0.6}s`}
+                          repeatCount="indefinite"
+                          rotate="auto"
+                        >
+                          <mpath href={`#edge-${active}`} />
+                        </animateMotion>
+                        <animate
+                          attributeName="opacity"
+                          values="0;1;1;0"
+                          keyTimes="0;0.15;0.85;1"
+                          dur="1.8s"
+                          begin={`${k * 0.6}s`}
+                          repeatCount="indefinite"
+                        />
+                      </>
+                    )}
                   </polygon>
                 ))}
               </g>

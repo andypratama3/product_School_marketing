@@ -3,11 +3,12 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { Icon } from '@/lib/icons';
 import { features } from '@/data/features';
-import { openFlow } from './SearchDialog';
+import { lockScroll, openFlow, trapTab, unlockScroll } from './SearchDialog';
 
 export default function FeatureDialog() {
   const [id, setId] = useState<string | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onOpen = (e: Event) => setId((e as CustomEvent<string>).detail);
@@ -21,14 +22,14 @@ export default function FeatureDialog() {
     if (!id) return;
     const opener = document.activeElement as HTMLElement | null;
     closeRef.current?.focus();
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setId(null);
+      trapTab(e, panelRef.current);
     };
     window.addEventListener('keydown', onKey);
     return () => {
-      document.body.style.overflow = prevOverflow;
+      unlockScroll();
       window.removeEventListener('keydown', onKey);
       opener?.focus?.();
     };
@@ -112,7 +113,7 @@ export default function FeatureDialog() {
             className="btn p"
             onClick={() => {
               setId(null);
-              openFlow(feature.flow!);
+              if (feature.flow) openFlow(feature.flow);
             }}
             aria-label="Lihat alur interaktif untuk fitur ini"
           >

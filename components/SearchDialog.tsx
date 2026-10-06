@@ -26,6 +26,40 @@ export function openFlow(key: string) {
   });
 }
 
+// Reference-counted background scroll lock so overlapping dialogs restore
+// overflow only when the last one closes.
+let scrollLocks = 0;
+let savedOverflow = '';
+
+export function lockScroll() {
+  if (scrollLocks === 0) savedOverflow = document.body.style.overflow;
+  scrollLocks++;
+  document.body.style.overflow = 'hidden';
+}
+
+export function unlockScroll() {
+  scrollLocks = Math.max(0, scrollLocks - 1);
+  if (scrollLocks === 0) document.body.style.overflow = savedOverflow;
+}
+
+// Keep Tab cycling inside an open modal dialog.
+export function trapTab(e: KeyboardEvent, root: HTMLElement | null) {
+  if (e.key !== 'Tab' || !root) return;
+  const items = [...root.querySelectorAll<HTMLElement>('button, [href], input, [tabindex]:not([tabindex="-1"])')].filter(
+    (el) => !el.hasAttribute('disabled'),
+  );
+  if (!items.length) return;
+  const first = items[0];
+  const last = items[items.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
 export default function SearchDialog({
   open,
   onClose,
@@ -35,6 +69,7 @@ export default function SearchDialog({
 }) {
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const index: Entry[] = useMemo(
     () => [
@@ -77,14 +112,14 @@ export default function SearchDialog({
   useEffect(() => {
     if (!open) return;
     inputRef.current?.focus();
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
+      trapTab(e, dialogRef.current);
     };
     window.addEventListener('keydown', onKey);
     return () => {
-      document.body.style.overflow = prevOverflow;
+      unlockScroll();
       window.removeEventListener('keydown', onKey);
     };
   }, [open, onClose]);
@@ -115,7 +150,9 @@ export default function SearchDialog({
     >
       <div
         role="dialog"
+        aria-modal="true"
         aria-label="Pencarian"
+        ref={dialogRef}
         style={{
           background: 'var(--sf)',
           border: '1px solid var(--bd)',
@@ -129,6 +166,7 @@ export default function SearchDialog({
           id="q"
           ref={inputRef}
           placeholder="Cari fitur atau alur"
+          aria-label="Cari fitur atau alur"
           autoComplete="off"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
