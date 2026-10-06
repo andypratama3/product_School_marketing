@@ -124,6 +124,7 @@ export const features: Feature[] = [
     icon: 'users',
     description: 'Profil, import Dapodik, penempatan kelas.',
     users: 'TU kesiswaan',
+    flow: 'siswa-baru',
     capabilities: ['Student CRUD', 'Import Dapodik XLSX', 'StudentClassroom'],
   },
   {
@@ -133,6 +134,7 @@ export const features: Feature[] = [
     icon: 'graduation-cap',
     description: 'Riwayat kelas, kelulusan, retensi.',
     users: 'Wali kelas',
+    flow: 'siswa-kelas',
     capabilities: ['Riwayat kelas', 'PromotionService', 'GraduationService', 'Retention'],
   },
   {
@@ -142,6 +144,7 @@ export const features: Feature[] = [
     icon: 'activity',
     description: 'Analitik performa dan peer benchmark.',
     users: 'BK / wali kelas',
+    flow: 'siswa-performa',
     capabilities: ['StudentAnalyticsService', 'Peer benchmark', 'Learning path recommendations'],
   },
   {
@@ -151,6 +154,7 @@ export const features: Feature[] = [
     icon: 'siren',
     description: 'Indikator akademik, kehadiran, perilaku.',
     users: 'BK & kurikulum',
+    flow: 'ews-resiko',
     capabilities: ['EarlyWarningService', 'Indikator akademik / hadir / perilaku', 'Alert otomatis'],
   },
   {
@@ -160,6 +164,7 @@ export const features: Feature[] = [
     icon: 'trophy',
     description: 'Master ekskul + assign siswa per tahun pelajaran, tampil di rapor.',
     users: 'Pembina ekskul & wali kelas',
+    flow: 'ekskul-ikut',
     capabilities: [
       'Extracurricular resource',
       'StudentExtracurricular bulk input / bulk store',
@@ -173,6 +178,7 @@ export const features: Feature[] = [
     icon: 'calendar-check',
     description: 'Rekap siswa, export, periode semester.',
     users: 'Wali kelas',
+    flow: 'hadir-kelola',
     capabilities: ['Attendance siswa', 'Rekap periode', 'AttendanceExport', 'AttendanceSummaryCalculator'],
   },
   {
@@ -192,6 +198,7 @@ export const features: Feature[] = [
     icon: 'map',
     description: 'Batas area absensi dari file KML.',
     users: 'Admin sekolah',
+    flow: 'geofence-cek',
     capabilities: ['KmlService', 'AttendanceLocation', 'Hitung jarak geofence', 'Validasi KML'],
   },
   {
@@ -210,6 +217,7 @@ export const features: Feature[] = [
     icon: 'bell',
     description: 'Event AttendanceMarked ke saluran sekolah.',
     users: 'Orang tua',
+    flow: 'hadir-ingat',
     capabilities: ['Event AttendanceMarked', 'Notifikasi WhatsApp', 'Rekap harian'],
   },
   {
