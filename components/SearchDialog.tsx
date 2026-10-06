@@ -26,6 +26,24 @@ export function openFlow(key: string) {
   });
 }
 
+// Keep Tab cycling inside an open modal dialog.
+export function trapTab(e: KeyboardEvent, root: HTMLElement | null) {
+  if (e.key !== 'Tab' || !root) return;
+  const items = [...root.querySelectorAll<HTMLElement>('button, [href], input, [tabindex]:not([tabindex="-1"])')].filter(
+    (el) => !el.hasAttribute('disabled'),
+  );
+  if (!items.length) return;
+  const first = items[0];
+  const last = items[items.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
 export default function SearchDialog({
   open,
   onClose,
@@ -35,6 +53,7 @@ export default function SearchDialog({
 }) {
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const index: Entry[] = useMemo(
     () => [
@@ -81,6 +100,7 @@ export default function SearchDialog({
     document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
+      trapTab(e, dialogRef.current);
     };
     window.addEventListener('keydown', onKey);
     return () => {
@@ -117,6 +137,7 @@ export default function SearchDialog({
         role="dialog"
         aria-modal="true"
         aria-label="Pencarian"
+        ref={dialogRef}
         style={{
           background: 'var(--sf)',
           border: '1px solid var(--bd)',
