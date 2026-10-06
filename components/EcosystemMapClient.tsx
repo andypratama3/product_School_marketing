@@ -41,22 +41,6 @@ export default function EcosystemMapClient({ categories, features }: Props) {
     return () => mq.removeEventListener('change', onChange);
   }, []);
 
-  // Node yang baru aktif mutar dulu seperti baru muncul; spawn edge-flow
-  // (panah ~1.1 dtk) tiba setelah putaran selesai.
-  useEffect(() => {
-    if (reducedMotion) return;
-    const node = nodeRefs.current[active];
-    if (!node) return;
-    const spin = node.animate(
-      [
-        { rotate: '-180deg', scale: '0.7' },
-        { rotate: '0deg', scale: '1' },
-      ],
-      { duration: 600, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
-    );
-    return () => spin.cancel();
-  }, [active, reducedMotion]);
-
   const category = categories[active];
 
   const items = useMemo(
