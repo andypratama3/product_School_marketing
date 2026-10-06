@@ -10,8 +10,6 @@ export default function FlowSection() {
   const { flowKey, flowNonce, setFlowKey } = useFlow();
   const [step, setStep] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
-  const lockRef = useRef(false);
-  const lockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const flow = flowMap[flowKey];
   const total = flow?.steps.length || 0;
@@ -22,19 +20,8 @@ export default function FlowSection() {
     setStep(0);
   }, [flowKey, flowNonce]);
 
-  useEffect(() => {
-    return () => {
-      if (lockTimer.current) clearTimeout(lockTimer.current);
-    };
-  }, []);
-
   const go = useCallback((i: number) => {
-    lockRef.current = true;
     setStep(Math.max(0, Math.min(total - 1, i)));
-    if (lockTimer.current) clearTimeout(lockTimer.current);
-    lockTimer.current = setTimeout(() => {
-      lockRef.current = false;
-    }, 1200);
   }, [total]);
 
   const onKey = useCallback((e: KeyboardEvent) => {
@@ -59,47 +46,6 @@ export default function FlowSection() {
     addEventListener('keydown', onKey);
     return () => removeEventListener('keydown', onKey);
   }, [onKey]);
-
-  // Scroll-linked step highlighting (no pinning): update the step as the
-  // user scrolls through the stage, without hijacking scroll or clipping
-  // content. Manual navigation (buttons / keyboard) always wins while the
-  // user is interacting.
-  useEffect(() => {
-    let trigger: { kill: () => void } | undefined;
-    let cancelled = false;
-    (async () => {
-      try {
-        const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
-          import('gsap'),
-          import('gsap/ScrollTrigger'),
-        ]);
-        if (cancelled) return;
-        gsap.registerPlugin(ScrollTrigger);
-        const reduceMotion = matchMedia(
-          '(prefers-reduced-motion: reduce)',
-        ).matches;
-        const stage = stageRef.current;
-        if (!stage || reduceMotion || total < 2) return;
-        trigger = ScrollTrigger.create({
-          trigger: stage,
-          start: 'top 60%',
-          end: 'bottom 40%',
-          onUpdate: (self) => {
-            if (lockRef.current) return;
-            const i = Math.min(total - 1, Math.floor(self.progress * total));
-            setStep((prev) => (prev === i ? prev : i));
-          },
-        });
-        ScrollTrigger.refresh();
-      } catch {
-        // Scroll-linked highlighting is progressive enhancement.
-      }
-    })();
-    return () => {
-      cancelled = true;
-      trigger?.kill();
-    };
-  }, [total]);
 
   if (!flow) {
     return null;
