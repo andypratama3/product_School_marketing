@@ -724,6 +724,7 @@ export const features: Feature[] = [
     icon: 'network',
     description: '/teacher /parent /v2 landing.',
     users: 'Aplikasi mobile',
+    flow: 'api-akses',
     capabilities: ['REST /teacher /parent /v2', 'Headless landing', '226 route API'],
   },
   {
@@ -733,6 +734,7 @@ export const features: Feature[] = [
     icon: 'server-cog',
     description: 'Rapor batch, export, notifikasi, publikasi.',
     users: 'Sistem',
+    flow: 'jobs-antre',
     capabilities: ['ProcessRaporBatchJob', 'GenerateExportJob', 'Queue pembayaran / notifikasi'],
   },
   {
@@ -742,6 +744,7 @@ export const features: Feature[] = [
     icon: 'webhook',
     description: 'Webhook masuk (WA, IG, Midtrans, FB) dan keluar (FCM, SMS, email).',
     users: 'Admin sistem',
+    flow: 'webhook-hub',
     capabilities: [
       'HMAC SHA256 / SHA512 verify',
       'Throttle Midtrans 30/menit, tanpa CSRF',
@@ -756,6 +759,7 @@ export const features: Feature[] = [
     icon: 'arrow-left-right',
     description: 'Bulk delete, import, export, template untuk 8 model + 12 export Excel.',
     users: 'Admin data',
+    flow: 'bulk-impor',
     capabilities: [
       'BulkOperationController (8 model)',
       'GenerateExportJob chunk(500)',
@@ -770,6 +774,7 @@ export const features: Feature[] = [
     icon: 'scroll-text',
     description: 'Audit trail, monitoring sistem, fleet metrics, cache inspect/flush.',
     users: 'Superadmin',
+    flow: 'audit-jejak',
     capabilities: [
       'HasAuditLog trait',
       'SystemMonitoringController metrics',
@@ -784,6 +789,7 @@ export const features: Feature[] = [
     icon: 'video',
     description: 'Manajemen kamera CCTV dan halaman monitoring.',
     users: 'Admin sekolah',
+    flow: 'cctv-pantau',
     capabilities: ['CctvController', 'Settings/CctvManagementController', 'Halaman monitoring'],
   },
 ];
