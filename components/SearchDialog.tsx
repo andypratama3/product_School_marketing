@@ -115,6 +115,7 @@ export default function SearchDialog({
     >
       <div
         role="dialog"
+        aria-modal="true"
         aria-label="Pencarian"
         style={{
           background: 'var(--sf)',
