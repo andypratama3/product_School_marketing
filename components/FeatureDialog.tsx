@@ -59,6 +59,7 @@ export default function FeatureDialog() {
       }}
     >
       <div
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label="Detail fitur"
@@ -110,10 +111,12 @@ export default function FeatureDialog() {
         <h3 style={{ fontSize: '0.95rem', margin: '22px 0 8px' }}>Alur kerja</h3>
         {feature.flow ? (
           <button
+            type="button"
             className="btn p"
             onClick={() => {
+              const key = feature.flow;
               setId(null);
-              if (feature.flow) openFlow(feature.flow);
+              if (key) openFlow(key);
             }}
             aria-label="Lihat alur interaktif untuk fitur ini"
           >

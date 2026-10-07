@@ -30,6 +30,10 @@ export default function Hero() {
           <Icon name="play" />
           Coba alur interaktif
         </a>
+        <a className="btn" href="#cta">
+          <Icon name="calendar-check" />
+          Hubungi / book call
+        </a>
       </div>
       <div className="hv r" aria-hidden="true">
         <div className="sb">

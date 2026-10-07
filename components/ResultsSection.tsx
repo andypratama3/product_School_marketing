@@ -8,7 +8,7 @@ import { openFeature, openFlow } from './SearchDialog';
 import { useMemo } from 'react';
 
 export default function ResultsSection() {
-  const { flowKey, setFlowKey } = useFlow();
+  const { flowKey } = useFlow();
   const flow = flowMap[flowKey];
   const owner = useMemo(() => features.find((f) => f.flow === flowKey), [flowKey]);
   const related = useMemo(
@@ -67,9 +67,10 @@ export default function ResultsSection() {
         {flows.map((item) => (
           <button
             key={item.key}
+            type="button"
             className="chip"
             aria-pressed={item.key === flowKey}
-            onClick={() => setFlowKey(item.key)}
+            onClick={() => openFlow(item.key)}
             aria-label={`Coba alur ${item.title.replace(/^Alur /, '').replace(/:.*/, '')}`}
           >
             {item.title.replace(/^Alur /, '').replace(/:.*/, '')}

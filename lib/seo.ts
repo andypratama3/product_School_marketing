@@ -1,10 +1,12 @@
+import { inventory, ALL_TIERS } from '@/data/pricing';
+import { SOCIAL } from '@/lib/site';
+
 const RAW = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 
 export const SITE_URL = (RAW || 'http://localhost:3100').replace(/\/+$/, '');
 export const SITE_NAME = 'ProductSchool';
 export const SITE_TITLE = 'ProductSchool — Sistem Sekolah Terintegrasi';
-export const SITE_DESCRIPTION =
-  'ProductSchool menyatukan akademik, keuangan, kehadiran, komunikasi, dan CMS sekolah dalam satu sistem. Jelajahi 75 fitur terverifikasi.';
+export const SITE_DESCRIPTION = `ProductSchool menyatukan akademik, keuangan, kehadiran, komunikasi, dan CMS sekolah dalam satu sistem. Jelajahi ${inventory.features} fitur dan ${inventory.flows} alur terverifikasi.`;
 
 /**
  * Indexable hanya bila: build produksi, domain diset, dan NOINDEX tidak diaktifkan.
@@ -21,6 +23,18 @@ if (process.env.NODE_ENV === 'production' && !RAW) {
   );
 }
 
+const pricedOffers = ALL_TIERS.filter((t) => t.amountIdr != null).map((t) => ({
+  '@type': 'Offer' as const,
+  name: `ProductSchool ${t.name}`,
+  price: String(t.amountIdr),
+  priceCurrency: 'IDR',
+  availability: 'https://schema.org/InStock',
+  url: `${SITE_URL}/?paket=${t.id}#harga`,
+  ...(t.billing === 'MONTH'
+    ? { priceSpecification: { '@type': 'UnitPriceSpecification', price: t.amountIdr, priceCurrency: 'IDR', billingDuration: 'P1M' } }
+    : {}),
+}));
+
 export const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -30,7 +44,8 @@ export const jsonLd = {
       name: SITE_NAME,
       url: SITE_URL,
       logo: `${SITE_URL}/icon.svg`,
-      // sameAs: [...]  // HANYA bila pemilik memberi akun resmi
+      email: SOCIAL.email.replace(/^mailto:/, ''),
+      sameAs: [SOCIAL.github, SOCIAL.linkedin, SOCIAL.cal],
     },
     {
       '@type': 'WebSite',
@@ -39,7 +54,6 @@ export const jsonLd = {
       name: SITE_NAME,
       inLanguage: 'id-ID',
       publisher: { '@id': `${SITE_URL}/#org` },
-      // JANGAN tambah SearchAction: pencarian situs ini dialog, bukan URL.
     },
     {
       '@type': 'SoftwareApplication',
@@ -49,7 +63,15 @@ export const jsonLd = {
       applicationCategory: 'EducationalApplication',
       operatingSystem: 'Web',
       inLanguage: 'id-ID',
-      // offers: {...}  // HANYA bila pemilik memberi harga resmi. Tanpa rating/review.
+      offers: pricedOffers,
+    },
+    {
+      '@type': 'Person',
+      name: 'Andy Pratama',
+      url: SOCIAL.cal,
+      sameAs: [SOCIAL.github, SOCIAL.linkedin, SOCIAL.cal],
+      jobTitle: 'Fullstack Software Engineer',
+      email: SOCIAL.email.replace(/^mailto:/, ''),
     },
   ],
 };

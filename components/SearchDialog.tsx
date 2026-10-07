@@ -2,9 +2,9 @@
 
 import { useMemo, useRef, useState, useCallback, useEffect } from 'react';
 import { Icon, type IconName } from '@/lib/icons';
-import { scrollToId } from '@/lib/scroll';
 import { features } from '@/data/features';
 import { flowPickOptions } from '@/data/flows';
+import { scrollToId } from '@/lib/scroll';
 
 type Entry = {
   id: string;
@@ -20,10 +20,14 @@ export function openFeature(id: string) {
 
 export function openFlow(key: string) {
   window.dispatchEvent(new CustomEvent('open-flow', { detail: key }));
-  // Ensure the user actually sees the flow they just picked.
-  requestAnimationFrame(() => {
-    scrollToId('flow');
-  });
+  // Dialog unlock runs in effect cleanup. Scroll twice: once soon after
+  // unlock, again after the new flow's layout settles (height change).
+  const go = () => {
+    while (scrollLocks > 0) unlockScroll();
+    scrollToId('flow', 'auto');
+  };
+  window.setTimeout(go, 50);
+  window.setTimeout(go, 200);
 }
 
 // Reference-counted background scroll lock so overlapping dialogs restore

@@ -14,7 +14,8 @@ export default function Footer() {
         <a href="#fit">Fitur</a>
         <a href="#flow">Alur</a>
         <a href="#harga">Harga</a>
-        <a href="#cta">Mulai</a>
+        <a href="#tentang">Tentang</a>
+        <a href="#cta">Kontak</a>
       </nav>
       <span className="mu">© 2026 ProductSchool</span>
     </footer>

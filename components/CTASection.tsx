@@ -1,5 +1,8 @@
 import { Icon } from '@/lib/icons';
 import { audiences, stack } from '@/data/sales';
+import { inventory } from '@/data/pricing';
+import ContactForm from './ContactForm';
+import CalBook from './CalBook';
 
 export default function CTASection() {
   return (
@@ -9,9 +12,28 @@ export default function CTASection() {
       </div>
       <h2 className="rv">Siap membawa sekolah ke satu sistem?</h2>
       <p className="lead mu rv">
-        ProductSchool adalah source code lengkap sistem sekolah — bukan SaaS
-        terkunci. Instal, sesuaikan, miliki sepenuhnya.
+        ProductSchool adalah source code lengkap sistem sekolah — bukan SaaS terkunci. Kirim
+        pesan, atau jadwalkan panggilan langsung. Inventori terkini: {inventory.features} fitur
+        dan {inventory.flows} alur terverifikasi.
       </p>
+
+      <div className="cta-split rv">
+        <div className="cta-panel">
+          <h3 className="cta-panel-title">Kirim pesan</h3>
+          <p className="mu" style={{ marginBottom: 16 }}>
+            Kami balas via email. Sertakan paket jika sudah memilih.
+          </p>
+          <ContactForm />
+        </div>
+        <div className="cta-panel">
+          <h3 className="cta-panel-title">Jadwalkan panggilan</h3>
+          <p className="mu" style={{ marginBottom: 16 }}>
+            Pilih slot di Cal.com — tanpa bolak-balik email.
+          </p>
+          <CalBook variant="cards" />
+        </div>
+      </div>
+
       <div className="bene rv">
         {audiences.map((item) => (
           <div className="card" key={item.title}>
@@ -31,13 +53,13 @@ export default function CTASection() {
         ))}
       </div>
       <div className="row rv" style={{ justifyContent: 'center' }}>
-        <a className="btn p" href="https://github.com" target="_blank" rel="noopener noreferrer">
-          <Icon name="github" />
-          Lihat source
-        </a>
         <a className="btn" href="#fit">
           <Icon name="layout-grid" />
           Jelajahi fitur lagi
+        </a>
+        <a className="btn" href="#harga">
+          <Icon name="wallet" />
+          Lihat harga
         </a>
       </div>
     </section>

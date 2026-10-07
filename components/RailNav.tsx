@@ -10,7 +10,8 @@ const SECTIONS = [
   ['flow', 'Alur'],
   ['done', 'Hasil'],
   ['harga', 'Harga'],
-  ['cta', 'Mulai'],
+  ['tentang', 'Tentang'],
+  ['cta', 'Kontak'],
 ] as const;
 
 export default function RailNav() {

@@ -13,12 +13,18 @@ export default function FlowSection() {
 
   const flow = flowMap[flowKey];
   const total = flow?.steps.length || 0;
-  const current = flow?.steps[step];
 
-  // Reset step on flow switch AND on re-open of the same flow (nonce bump).
-  useEffect(() => {
+  // Reset step on flow switch / re-open during render so we never paint
+  // one frame with an out-of-range step from the previous flow.
+  const resetToken = `${flowKey}:${flowNonce}`;
+  const [seenToken, setSeenToken] = useState(resetToken);
+  if (seenToken !== resetToken) {
+    setSeenToken(resetToken);
     setStep(0);
-  }, [flowKey, flowNonce]);
+  }
+
+  const activeStep = total === 0 ? 0 : Math.min(step, total - 1);
+  const current = flow?.steps[activeStep];
 
   const go = useCallback((i: number) => {
     setStep(Math.max(0, Math.min(total - 1, i)));
@@ -31,31 +37,33 @@ export default function FlowSection() {
     )
       return;
     const target = e.target as HTMLElement | null;
-    if (target && /INPUT|TEXTAREA/.test(target.tagName)) return;
+    if (target && /INPUT|TEXTAREA|SELECT/.test(target.tagName)) return;
     // Don't hijack arrows while a modal dialog is open.
     if (document.querySelector('[role="dialog"]')) return;
     const stage = stageRef.current;
     if (!stage) return;
     const r = stage.getBoundingClientRect();
     if (r.top > innerHeight * 0.5 || r.bottom < innerHeight * 0.5) return;
-    if (e.key === 'ArrowRight') go(step + 1);
-    else go(step - 1);
-  }, [step, go]);
+    if (e.key === 'ArrowRight') go(activeStep + 1);
+    else go(activeStep - 1);
+  }, [activeStep, go]);
 
   useEffect(() => {
     addEventListener('keydown', onKey);
     return () => removeEventListener('keydown', onKey);
   }, [onKey]);
 
-  if (!flow) {
+  if (!flow || total === 0) {
     return null;
   }
 
   const advance = () => {
-    if (step === total - 1) {
-      scrollToId('done');
+    if (activeStep === total - 1) {
+      // Instant — smooth scroll often undershoots after step layout changes.
+      scrollToId('done', 'auto');
+      window.setTimeout(() => scrollToId('done', 'auto'), 120);
     } else {
-      go(step + 1);
+      go(activeStep + 1);
     }
   };
 
@@ -74,8 +82,13 @@ export default function FlowSection() {
           {flowPickOptions.map((option) => (
             <button
               key={option.key}
+              type="button"
               className={option.key === flowKey ? 'on' : undefined}
-              onClick={() => setFlowKey(option.key)}
+              onClick={() => {
+                setFlowKey(option.key);
+                // Height berubah antar alur — re-anchor setelah layout settle.
+                window.setTimeout(() => scrollToId('flow', 'auto'), 50);
+              }}
               aria-label={`Pilih alur ${option.title}`}
               aria-pressed={option.key === flowKey}
             >
@@ -85,13 +98,14 @@ export default function FlowSection() {
         </div>
 
         <div className="prog" role="group" aria-label="Langkah">
-          {flow.steps?.map((s, i) => (
+          {flow.steps.map((s, i) => (
             <button
-              key={s.title}
+              key={`${flowKey}-${i}-${s.title}`}
+              type="button"
               data-i={i}
-              aria-label={`Langkah ${i + 1}`}
-              aria-current={i === step ? 'step' : undefined}
-              className={i === step ? 'on' : i < step ? 'dn' : undefined}
+              aria-label={`Langkah ${i + 1}: ${s.title}`}
+              aria-current={i === activeStep ? 'step' : undefined}
+              className={i === activeStep ? 'on' : i < activeStep ? 'dn' : undefined}
               onClick={() => go(i)}
             >
               {i + 1}
@@ -101,12 +115,12 @@ export default function FlowSection() {
         <div className="pbar" aria-hidden="true">
           <i
             style={{
-              transform: `scaleX(${(step + 1) / total})`,
+              transform: `scaleX(${(activeStep + 1) / total})`,
             }}
           />
         </div>
 
-        <div className="split step-swap" key={`split-${flowKey}-${step}`}>
+        <div className="split step-swap" key={`split-${flowKey}-${activeStep}`}>
           <div className="pane">
             <div className="pane-header">
               <i className="dot red" />
@@ -163,9 +177,9 @@ export default function FlowSection() {
           </div>
         </div>
 
-        <div className="sy step-swap" key={`sy-${flowKey}-${step}`} aria-live="polite">
+        <div className="sy step-swap" key={`sy-${flowKey}-${activeStep}`} aria-live="polite">
           <div>
-            <h3>Langkah {step + 1}</h3>
+            <h3>Langkah {activeStep + 1}</h3>
             <p>
               <b>{current?.title || ''}</b>
             </p>
@@ -194,15 +208,20 @@ export default function FlowSection() {
         </details>
 
         <div className="ctl">
-          <button className="btn" disabled={step === 0} onClick={() => go(step - 1)}>
+          <button
+            type="button"
+            className="btn"
+            disabled={activeStep === 0}
+            onClick={() => go(activeStep - 1)}
+          >
             <Icon name="chevron-left" />
             Sebelumnya
           </button>
           <span className="note">
-            Langkah {step + 1} dari {total}
+            Langkah {activeStep + 1} dari {total}
           </span>
-          <button className="btn p" onClick={advance}>
-            <span>{step === total - 1 ? 'Lihat hasil' : 'Lanjut'}</span>
+          <button type="button" className="btn p" onClick={advance}>
+            <span>{activeStep === total - 1 ? 'Lihat hasil' : 'Lanjut'}</span>
             <Icon name="chevron-right" />
           </button>
         </div>
