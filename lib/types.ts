@@ -83,7 +83,8 @@ export type FlowKey =
   | 'webhook-hub'
   | 'bulk-impor'
   | 'audit-jejak'
-  | 'cctv-pantau';
+  | 'cctv-pantau'
+  | 'bankkaltim-va';
 
 export type Feature = {
   id: string;

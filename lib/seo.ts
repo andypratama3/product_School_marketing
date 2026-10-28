@@ -1,27 +1,21 @@
 import { inventory, ALL_TIERS } from '@/data/pricing';
 import { SOCIAL } from '@/lib/site';
 
-const RAW = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+const PRODUCTION_URL = 'https://product-school.vercel.app';
+const RAW = process.env.NEXT_PUBLIC_SITE_URL?.trim() || PRODUCTION_URL;
 
-export const SITE_URL = (RAW || 'http://localhost:3100').replace(/\/+$/, '');
+export const SITE_URL = RAW.replace(/\/+$/, '');
 export const SITE_NAME = 'ProductSchool';
 export const SITE_TITLE = 'ProductSchool — Sistem Sekolah Terintegrasi';
-export const SITE_DESCRIPTION = `ProductSchool menyatukan akademik, keuangan, kehadiran, komunikasi, dan CMS sekolah dalam satu sistem. Jelajahi ${inventory.features} fitur dan ${inventory.flows} alur terverifikasi.`;
+export const SITE_DESCRIPTION = `ProductSchool menyatukan akademik, keuangan, kehadiran, komunikasi, dan CMS sekolah dalam satu sistem. Jelajahi ${inventory.features} fitur dan ${inventory.flows} alur interaktif.`;
 
 /**
- * Indexable hanya bila: build produksi, domain diset, dan NOINDEX tidak diaktifkan.
- * Domain belum diset => noindex + peringatan (gagal aman, bukan canonical salah).
+ * Indexable hanya bila build produksi dan NOINDEX tidak diaktifkan.
+ * Domain default sudah diketahui; NEXT_PUBLIC_SITE_URL menimpa bila diisi.
  */
 export const INDEXABLE =
   process.env.NODE_ENV === 'production' &&
-  Boolean(RAW) &&
   process.env.NEXT_PUBLIC_NOINDEX !== 'true';
-
-if (process.env.NODE_ENV === 'production' && !RAW) {
-  console.warn(
-    '[seo] NEXT_PUBLIC_SITE_URL belum diset: situs dibuat noindex. Set domain produksi sebelum deploy.',
-  );
-}
 
 const pricedOffers = ALL_TIERS.filter((t) => t.amountIdr != null).map((t) => ({
   '@type': 'Offer' as const,
@@ -43,7 +37,7 @@ export const jsonLd = {
       '@id': `${SITE_URL}/#org`,
       name: SITE_NAME,
       url: SITE_URL,
-      logo: `${SITE_URL}/icon.svg`,
+      logo: `${SITE_URL}/icon.png`,
       email: SOCIAL.email.replace(/^mailto:/, ''),
       sameAs: [SOCIAL.github, SOCIAL.linkedin, SOCIAL.cal],
     },

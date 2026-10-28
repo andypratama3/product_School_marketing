@@ -11,7 +11,7 @@ export default function Hero() {
     <section className="s" id="hero">
       <span className="hero-badge r">
         <Icon name="sparkles" />
-        {features.length} fitur terverifikasi
+        {features.length} fitur
         {apiStat ? ` · ${apiStat.value} API route` : ''}
       </span>
       <h1 className="r">
@@ -56,18 +56,27 @@ export default function Hero() {
             <Icon name="file-text" />
           </u>
         </div>
-        <div className="mn">
+        <div className="mn" style={{ position: 'relative', overflow: 'hidden' }}>
           <div className="t">
             <Icon name="users" />
-            <s />
+            <div style={{ flex: 1 }}>
+              <s />
+              <s style={{ width: '60%', marginTop: 6 }} />
+            </div>
           </div>
           <div className="t">
             <Icon name="calendar-check" />
-            <s />
+            <div style={{ flex: 1 }}>
+              <s />
+              <s style={{ width: '80%', marginTop: 6 }} />
+            </div>
           </div>
           <div className="t">
             <Icon name="wallet" />
-            <s />
+            <div style={{ flex: 1 }}>
+              <s />
+              <s style={{ width: '40%', marginTop: 6 }} />
+            </div>
           </div>
           <div className="ch">
             <s style={{ height: '40%' }} />
@@ -83,6 +92,11 @@ export default function Hero() {
             <s style={{ width: '50%' }} />
             <s style={{ width: '80%' }} />
           </div>
+          
+          {/* Floating UI elements for tech feel */}
+          <div className="float-badge fb1" style={{ top: 20, right: -10 }}>+42k IDR</div>
+          <div className="float-badge fb2" style={{ top: 90, right: 30 }}>Synced</div>
+          <div className="float-badge fb3" style={{ bottom: 30, right: 10 }}>24/7</div>
         </div>
       </div>
     </section>

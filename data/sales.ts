@@ -4,11 +4,11 @@ import { categories } from '@/data/categories';
 import { flows } from '@/data/flows';
 
 export const stats: Stat[] = [
-  { value: String(features.length), label: 'Fitur terverifikasi' },
+  { value: String(features.length), label: 'Fitur' },
   { value: String(categories.length), label: 'Kategori inti' },
   { value: String(flows.length), label: 'Alur interaktif' },
-  { value: '226', label: 'Route API' },
-  { value: '380', label: 'Permission RBAC' },
+  { value: '188', label: 'Route API' },
+  { value: '233', label: 'Permission RBAC' },
 ];
 
 export const audiences: Audience[] = [
@@ -20,12 +20,12 @@ export const audiences: Audience[] = [
   {
     icon: 'shield',
     title: 'Keamanan berlapis',
-    body: 'Sanctum auth, 34 policy, 380 permission, data scoping per kelas, dan audit trail.',
+    body: 'Sanctum auth, 34 policy, 233 permission unik, data scoping per kelas, dan audit trail.',
   },
   {
     icon: 'network',
     title: 'API-first',
-    body: '226 route REST API — siap untuk aplikasi mobile, portal orang tua, dan integrasi pihak ketiga.',
+    body: '188 endpoint REST API — siap untuk aplikasi mobile, portal orang tua, dan integrasi pihak ketiga.',
   },
 ];
 

@@ -41,6 +41,7 @@ export const LANGGANAN: PriceTier[] = [
       'Akademik + Kehadiran + CMS',
       'Notifikasi WhatsApp',
       'Update berkala',
+      'Hosting/VPS ditanggung sendiri (est. Rp 150–300rb/bln)',
     ],
   },
   {
@@ -55,9 +56,10 @@ export const LANGGANAN: PriceTier[] = [
     features: [
       'Siswa tanpa batas',
       `Semua ${inventory.features} fitur terbuka`,
-      'Midtrans + QRIS & VA',
-      'Instagram + chatbot WA',
+      'Midtrans + QRIS & VA · Bank Kaltim VA',
+      'Instagram + chatbot WA + AI bot',
       'Prioritas bantuan',
+      'Hosting/VPS ditanggung sendiri (est. Rp 150–300rb/bln)',
     ],
   },
   {
@@ -73,6 +75,7 @@ export const LANGGANAN: PriceTier[] = [
       'API + webhook',
       'Laporan gabungan yayasan',
       'Manajer akun khusus',
+      'Hosting/VPS ditanggung sendiri (est. Rp 500rb–1jt/bln)',
     ],
   },
 ];
@@ -85,11 +88,13 @@ export const PROJECT: PriceTier[] = [
     amountIdr: 4_900_000,
     period: 'sekali bayar',
     billing: 'ONE_TIME',
-    desc: 'Source modul inti, milik penuh.',
+    desc: 'Source modul inti, milik penuh selamanya.',
     features: [
       'Akademik + Siswa + Kehadiran',
       'Instalasi di server Anda',
-      'Panduan deploy',
+      'Panduan deploy lengkap',
+      'Server/VPS tidak termasuk — bayar ke penyedia hosting Anda (est. Rp 150–300rb/bln)',
+      'Update gratis 6 bulan',
     ],
   },
   {
@@ -99,13 +104,14 @@ export const PROJECT: PriceTier[] = [
     amountIdr: 9_900_000,
     period: 'sekali bayar',
     billing: 'ONE_TIME',
-    desc: 'Seluruh source + pendampingan.',
+    desc: 'Seluruh source + pendampingan langsung.',
     top: true,
     features: [
       `Semua ${inventory.features} fitur + ${inventory.flows} alur`,
       'Instalasi + training 2 sesi',
-      'Update 1 tahun',
+      'Update gratis 1 tahun',
       'Hak modifikasi penuh',
+      'Server/VPS tidak termasuk — bayar ke penyedia hosting Anda (est. Rp 150–300rb/bln)',
     ],
   },
   {
@@ -115,11 +121,12 @@ export const PROJECT: PriceTier[] = [
     amountIdr: null,
     period: 'penawaran',
     billing: 'CUSTOM',
-    desc: 'Kustomisasi dan integrasi khusus.',
+    desc: 'Kustomisasi, integrasi sistem lama, atau multi-sekolah.',
     features: [
       'Fitur sesuai kebutuhan',
-      'Integrasi sistem lama',
-      'SLA dukungan',
+      'Integrasi sistem lama (legacy migration)',
+      'SLA dukungan terdefinisi',
+      'Diskusi kebutuhan server bersama',
     ],
   },
 ];

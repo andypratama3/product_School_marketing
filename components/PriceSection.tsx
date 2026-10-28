@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Icon } from '@/lib/icons';
 import { inventory, LANGGANAN, PROJECT, type PriceTier } from '@/data/pricing';
 
@@ -16,7 +17,34 @@ export default function PriceSection() {
         Harga mengacu pada inventori terkini: {inventory.features} fitur · {inventory.flows}{' '}
         alur · {inventory.apiRoutes} API.
       </p>
-      <div className="flowpick rv" role="group" aria-label="Model harga" style={{ marginTop: 18 }}>
+
+      {/* Hosting notice */}
+      <div
+        className="rv"
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: 10,
+          background: 'color-mix(in srgb, var(--acb) 10%, transparent)',
+          border: '1px solid color-mix(in srgb, var(--acb) 30%, transparent)',
+          borderRadius: 12,
+          padding: '12px 16px',
+          marginTop: 20,
+          maxWidth: 640,
+          fontSize: '0.85rem',
+        }}
+      >
+        <Icon name="server-cog" />
+        <div>
+          <b>Hosting / VPS tidak termasuk.</b>{' '}
+          Semua paket diinstalasi di server milik sekolah. Biaya server dibayar langsung ke
+          penyedia hosting pilihan Anda (est.{' '}
+          <b>Rp 150rb–1jt/bulan</b> tergantung spesifikasi). Kami bantu rekomendasi
+          dan setup.
+        </div>
+      </div>
+
+      <div className="flowpick rv" role="group" aria-label="Model harga" style={{ marginTop: 24 }}>
         <button
           type="button"
           className={mode === 'langganan' ? 'on' : undefined}
@@ -41,6 +69,7 @@ export default function PriceSection() {
       </div>
       <p className="note rv">
         Harga usulan — hubungi kami untuk penawaran resmi sesuai kebutuhan sekolah Anda.
+        Hosting/VPS dipilih dan dibayar sendiri ke penyedia server sesuai kebutuhan.
       </p>
     </section>
   );
@@ -68,13 +97,13 @@ function TierCard({ tier }: { tier: PriceTier }) {
         ))}
       </ul>
       <div className="row" style={{ marginTop: 'auto', paddingTop: 8 }}>
-        <a
+        <Link
           className={tier.top ? 'btn p' : 'btn'}
-          href={`?paket=${encodeURIComponent(tier.id)}#cta`}
+          href={`/?paket=${encodeURIComponent(tier.id)}#cta`}
           aria-label={`Pilih paket ${tier.name}`}
         >
           Pilih {tier.name}
-        </a>
+        </Link>
       </div>
     </div>
   );

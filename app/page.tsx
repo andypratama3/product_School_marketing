@@ -12,6 +12,7 @@ import AboutSection from '@/components/AboutSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import FeatureDialog from '@/components/FeatureDialog';
+import ScrollProgress from '@/components/ScrollProgress';
 import ScrollFx from '@/components/ScrollFx';
 import Toast from '@/components/Toast';
 import ErrorBoundary from '@/components/ErrorBoundary';
@@ -20,8 +21,9 @@ export default function Home() {
   return (
     <ErrorBoundary>
       <Header />
+      <ScrollProgress />
       <RailNav />
-      <main>
+      <main id="main-content">
         <Hero />
         <StatsBar />
         <EcosystemMap />

@@ -29,7 +29,7 @@ export default function OpengraphImage() {
           Semua kebutuhan sekolah, terhubung dalam satu sistem.
         </div>
         <div style={{ display: 'flex', fontSize: 30, color: '#97a096' }}>
-          {features.length} fitur terverifikasi
+          {features.length} fitur
         </div>
       </div>
     ),

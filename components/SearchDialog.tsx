@@ -186,6 +186,11 @@ export default function SearchDialog({
                 <Icon name={entry.icon} />
                 {entry.name}
                 <small>{entry.kind}</small>
+                {(entry.flow || entry.kind === 'Alur') && (
+                  <span className="flow-badge" style={{ marginLeft: 'auto' }}>
+                    <Icon name="play" />
+                  </span>
+                )}
               </button>
             ))
           ) : (

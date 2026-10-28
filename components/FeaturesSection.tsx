@@ -32,10 +32,22 @@ const FeatureCard = memo(function FeatureCard({ feature }: { feature: Feature })
       </span>
       <h3>{feature.name}</h3>
       <p>{feature.description}</p>
+      
+      {feature.capabilities.length > 0 && (
+        <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 4, width: '100%', alignItems: 'flex-start' }}>
+          {feature.capabilities.slice(0, 2).map((cap, i) => (
+            <div key={i} style={{ fontSize: '0.75rem', color: 'var(--mu)', background: 'var(--sf2)', padding: '2px 8px', borderRadius: 6, display: 'flex', alignItems: 'center', gap: 6, width: '100%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+              <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--bd)' }} />
+              {cap}
+            </div>
+          ))}
+        </div>
+      )}
+
       {feature.flow && (
-        <span className="tag">
+        <span className="tag" style={{ marginTop: 12 }}>
           <Icon name="play" />
-          Ada alur interaktif
+          Ada simulasi interaktif
         </span>
       )}
     </button>
@@ -104,7 +116,7 @@ export default function FeaturesSection() {
     <section className="s" id="fit">
       <h2 className="rv">Semua fitur dalam satu peta.</h2>
       <p className="mu rv" style={{ marginTop: 10 }}>
-        {features.length} fitur terverifikasi dari repository ProductSchool.
+        {features.length} fitur dari repository ProductSchool.
       </p>
       <div className="chips" role="group" aria-label="Filter kategori">
         {CHIPS.map((chip) => (
@@ -124,7 +136,9 @@ export default function FeaturesSection() {
             <h3 className="gh">
               <Icon name={group.category.icon} />
               {group.category.id}
-              <span>{group.items.length} fitur</span>
+              <span>
+                {group.items.length} fitur · {group.items.filter(f => f.flow).length} alur
+              </span>
             </h3>
             <div className="grid">
               {group.items.map((feature) => (

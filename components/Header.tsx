@@ -46,10 +46,12 @@ export default function Header() {
     <>
       <header className="site">
         <div className="logo">
-          <b>
-            <Icon name="graduation-cap" />
-          </b>
-          ProductSchool
+          <img
+            src="/brand/logo-sakolentra.png"
+            alt="Sakolentra — Pendidikan Digital"
+            width={768}
+            height={230}
+          />
         </div>
         <span className="sp" />
         <button className="ib" onClick={() => setSearchOpen(true)} aria-label="Cari">

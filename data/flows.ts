@@ -3004,6 +3004,114 @@ export const flows: Flow[] = [
       },
     ],
   },
+  {
+    key: 'bankkaltim-va',
+    title: 'Alur VA Bank Kaltim: dari tagihan sampai lunas',
+    leftLabel: 'Panel keuangan',
+    rightLabel: 'Sistem Bank',
+    evidence:
+      'BankKaltimVaService::issueForPayment / issueConsolidated → CreateBankVaJob → POST /va/create → callback POST client/api/callback. Evidence: VASPEC v1.0, BankKaltimVaService, CreateBankVaJob, ResetBankVaJob.',
+    results: [
+      'Tagihan lunas otomatis via callback bank.',
+      'StudentFee tercatat lunas, notifikasi terkirim 1x.',
+    ],
+    steps: [
+      {
+        title: 'Buat tagihan',
+        action: 'Admin membuat tagihan SPP atau tunggakan di dashboard.',
+        system: 'ProductSchool mencatat payment di database.',
+        result: 'Tagihan tersimpan, belum ada VA.',
+        fields: [
+          ['Siswa', 'Ahmad (contoh)', true],
+          ['Nominal', 'Rp 250.000'],
+          ['Status', 'Belum terbit VA'],
+        ],
+        badge: ['Draft', 'y'],
+        button: 'Terbitkan VA',
+        publicView: { kind: 'empty', message: 'Menunggu VA diterbitkan.' },
+      },
+      {
+        title: 'Terbitkan VA',
+        action: 'Pilih gateway Bank Kaltim. Centang tunggakan untuk konsolidasi.',
+        system:
+          'issueForPayment (single) atau issueConsolidated (total) membuat charge pending + nomor VA 19 digit, lalu antre CreateBankVaJob.',
+        result: 'Charge pending, job antre di redis.',
+        fields: [
+          ['Nomor VA', '0031113199508240003', true],
+          ['Nominal', 'Rp 250.000'],
+          ['Tipe', 'Single / Konsolidasi'],
+        ],
+        badge: ['Menunggu bank', 'y'],
+        button: 'Cek status bank',
+        publicView: {
+          kind: 'page',
+          label: 'Antrean',
+          headline: 'CreateBankVaJob',
+          body: 'Menunggu POST /va/create ke bank.',
+        },
+      },
+      {
+        title: 'Bank menyimpan VA',
+        action: 'Job memanggil POST /va/create.',
+        system:
+          'Bank jawab 00 → bank_synced_at terisi, VA aktif. Jika nomor sudah ada, otomatis ResetBankVaJob.',
+        result: 'VA aktif di bank, siap dibayar.',
+        fields: [
+          ['Nomor VA', '0031113199508240003'],
+          ['Kode bank', '00'],
+          ['bank_synced_at', 'Terisi'],
+        ],
+        badge: ['VA aktif', 'g'],
+        button: 'Tunggu pembayaran',
+        publicView: {
+          kind: 'page',
+          label: 'Bank Kaltim',
+          headline: 'VA aktif',
+          body: 'Siswa/orang tua bisa transfer ke nomor VA.',
+        },
+      },
+      {
+        title: 'Callback bank',
+        action: 'Bank mengirim POST client/api/callback setelah transfer.',
+        system:
+          'Nominal persis sama → kode 00, settlement. Nominal beda → kode 99, tetap pending. VA tak dikenal → kode 04.',
+        result: 'Charge success atau tetap pending.',
+        fields: [
+          ['amount', '250000', true],
+          ['reff', 'BK-20261009-001'],
+          ['Kode', '00'],
+        ],
+        badge: ['Callback', 'y'],
+        button: 'Lihat settlement',
+        publicView: {
+          kind: 'page',
+          label: 'Callback',
+          headline: 'Kode 00 — nominal cocok',
+          body: 'Kiriman ganda dengan reff sama dibalas 00 tanpa efek ganda (dedupe_key).',
+        },
+      },
+      {
+        title: 'Settlement',
+        action: 'Sistem menutup charge dan semua payment tercakup.',
+        system:
+          'Charge success; semua covered completed + paid_at; StudentFee lunas per payment; notifikasi agregat 1x; VA konsolidasi lain yang basi di-Reset.',
+        result: 'Semua tagihan tercakup lunas.',
+        fields: [
+          ['Charge', 'success'],
+          ['Covered', 'completed'],
+          ['Notifikasi', '1x terkirim'],
+        ],
+        badge: ['Lunas', 'g'],
+        button: 'Selesai',
+        publicView: {
+          kind: 'page',
+          label: 'Dashboard',
+          headline: 'Tagihan lunas',
+          body: 'Badge hijau. VA lain yang mencakup payment ini di-reset otomatis.',
+        },
+      },
+    ],
+  },
 ];
 
 export const flowMap: Record<string, Flow> = Object.fromEntries(

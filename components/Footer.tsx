@@ -1,13 +1,13 @@
-import { Icon } from '@/lib/icons';
-
 export default function Footer() {
   return (
     <footer className="site">
       <div className="logo">
-        <b>
-          <Icon name="graduation-cap" />
-        </b>
-        ProductSchool
+        <img
+          src="/brand/logo-sakolentra.png"
+          alt="Sakolentra — Pendidikan Digital"
+          width={768}
+          height={230}
+        />
       </div>
       <span className="sp" />
       <nav aria-label="Navigasi bawah">

@@ -42,9 +42,6 @@ export const metadata: Metadata = {
         },
       }
     : { index: false, follow: false },
-  icons: {
-    icon: '/icon.svg',
-  },
   verification: {
     google:
       process.env.NEXT_PUBLIC_GSC_VERIFICATION ||
@@ -85,7 +82,12 @@ export default function RootLayout({
         />
         <JsonLd data={jsonLd} />
       </head>
-      <body>{children}</body>
+      <body>
+        <a className="skip-link" href="#main-content">
+          Lewati ke konten utama
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { Icon } from '@/lib/icons';
+import { openFeature, openFlow } from './SearchDialog';
+import { scrollToId } from '@/lib/scroll';
 import type { Category, Feature } from '@/lib/types';
 
 interface Props {
@@ -226,14 +228,34 @@ export default function EcosystemMapClient({ categories, features }: Props) {
 
           {shown.length > 0 && (
             <ul className="feat-list">
-              {shown.map((f) => (
-                <li key={f.id}>
-                  <span className="fi" aria-hidden="true">
-                    <Icon name={f.icon} />
-                  </span>
-                  {f.name}
-                </li>
-              ))}
+              {shown.map((f) => {
+                const hasFlow = !!f.flow;
+                return (
+                  <li key={f.id}>
+                    <button
+                      onClick={() => {
+                        if (hasFlow) {
+                          openFlow(f.flow!);
+                          scrollToId('flow', 'auto');
+                        } else {
+                          openFeature(f.id);
+                        }
+                      }}
+                      aria-label={`${hasFlow ? 'Coba alur' : 'Lihat detail'} ${f.name}`}
+                    >
+                      <span className="fi" aria-hidden="true">
+                        <Icon name={f.icon} />
+                      </span>
+                      {f.name}
+                      {hasFlow && (
+                        <span className="flow-badge" title="Alur interaktif">
+                          <Icon name="play" />
+                        </span>
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           )}
 
@@ -243,6 +265,12 @@ export default function EcosystemMapClient({ categories, features }: Props) {
             </p>
           )}
         </div>
+      </div>
+      
+      <div className="eco-summary rv" style={{ marginTop: 20, textAlign: 'center' }}>
+        <p className="mu" style={{ fontSize: '0.85rem' }}>
+          <b>{features.filter(f => f.flow).length} alur interaktif</b> tersedia untuk dieksplorasi secara langsung.
+        </p>
       </div>
     </section>
   );

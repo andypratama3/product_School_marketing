@@ -665,7 +665,7 @@ export const features: Feature[] = [
     description: 'Permission dari route, disinkronkan CLI.',
     users: 'Superadmin',
     flow: 'perm-kelola',
-    capabilities: ['±380 permission', 'ListRouteCommand sync', 'app:list-route'],
+    capabilities: ['233 permission unik', 'ListRouteCommand sync', 'app:list-route'],
   },
   {
     id: 'rbac',
@@ -725,7 +725,7 @@ export const features: Feature[] = [
     description: '/teacher /parent /v2 landing.',
     users: 'Aplikasi mobile',
     flow: 'api-akses',
-    capabilities: ['REST /teacher /parent /v2', 'Headless landing', '226 route API'],
+    capabilities: ['REST /teacher /parent /v2', 'Headless landing', '188 endpoint API'],
   },
   {
     id: 'jobs',
@@ -783,14 +783,21 @@ export const features: Feature[] = [
     ],
   },
   {
-    id: 'cctv',
-    name: 'CCTV',
-    category: 'Sistem',
-    icon: 'video',
-    description: 'Manajemen kamera CCTV dan halaman monitoring.',
-    users: 'Admin sekolah',
-    flow: 'cctv-pantau',
-    capabilities: ['CctvController', 'Settings/CctvManagementController', 'Halaman monitoring'],
+    id: 'bankkaltim-va',
+    name: 'Integrasi Bank Kaltim VA',
+    category: 'Keuangan',
+    icon: 'credit-card',
+    description: 'Virtual Account Bank Kaltim (VASPEC v1.0): generate, konsolidasi tunggakan, callback settlement otomatis.',
+    users: 'Admin keuangan',
+    flow: 'bankkaltim-va',
+    capabilities: [
+      'BankKaltimVaService::issueForPayment (single)',
+      'issueConsolidated (tunggakan)',
+      'CreateBankVaJob / ResetBankVaJob / DeleteBankVaJob',
+      'Callback POST client/api/callback (kode 00/99/04)',
+      'Idempoten via dedupe_key',
+      'Format nomor VA 19 digit',
+    ],
   },
 ];
 

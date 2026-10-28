@@ -43,9 +43,11 @@ export default function RailNav() {
           key={id}
           href={`#${id}`}
           aria-label={label}
+          title={label}
           className={
             SECTIONS[active]?.[0] === id ? 'on' : undefined
           }
+          aria-current={SECTIONS[active]?.[0] === id ? 'true' : undefined}
         />
       ))}
     </nav>

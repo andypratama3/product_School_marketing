@@ -131,3 +131,53 @@
 4. PageSpeed Insights mobile sebagai baseline LCP/CLS/INP
 5. Cek pratinjau berbagi (WhatsApp/LinkedIn/FB Debugger) dengan gambar OG
 6. Pantau Indexing + Performance 2–4 minggu
+
+---
+
+# Pembaruan 2026-10-28 — verifikasi pasca-implementasi
+
+Bagian ini ditambahkan setelah pengecekan ulang build produksi lokal dan artefak live. Temuan `SEO-01`–`SEO-11` di atas tetap menjadi riwayat; status terbarunya ada di sini.
+
+## Status artefak live (masih build lama)
+
+| Item | Artefak live | Build lokal terbaru |
+|---|---|---|
+| Canonical | `http://localhost:3100` | `https://product-school.vercel.app` |
+| Robots meta | `noindex, nofollow` | `index, follow` |
+| Sitemap | 200, 1 URL | 200, 1 URL |
+| OG image | 200 `image/png` | 200 `image/png` |
+
+**Kesimpulan:** perbaikan SEO belum tayang. Redeploy Vercel wajib; tanpa itu Google tetap melihat `noindex` + canonical localhost.
+
+## SEO-12 — Default URL & gerbang indexability membuat build tanpa env salah
+- **Tier:** 1 (diperbaiki)
+- **File:** `lib/seo.ts:4-16`, `.env.example`
+- **Bukti sebelum:** env kosong → canonical `https://example.com`; artefak live → canonical localhost + noindex.
+- **Perbaikan:** `PRODUCTION_URL` menjadi default; `INDEXABLE = production && NEXT_PUBLIC_NOINDEX !== 'true'`; `.env.example` memakai URL produksi.
+- **Verifikasi:** title 43 char; description 144 char; canonical produksi; `index, follow`; OG/Twitter absolut; JSON-LD 1 blok valid; 404 → 404; header keamanan ada.
+- **Catatan operasional:** kegagalan verifikasi pertama disebabkan proses `next start` lama yang masih menyajikan HTML build sebelumnya — bukan kode. Selalu matikan server lama sebelum mengukur.
+
+## SEO-13 — Google Fonts render-blocking
+- **Tier:** 2 (belum diubah)
+- **File:** `app/layout.tsx:71-80`
+- **Bukti:** `preconnect` + stylesheet `fonts.googleapis.com` di `<head>`.
+- **Usulan:** migrasi ke `next/font/google`; ukur LCP sebelum/sesudah.
+
+## SEO-14 — Heading generik pada bagian alur
+- **Tier:** 3 (konten)
+- **File:** `components/FlowSection.tsx`
+- **Bukti:** outline memuat `Alur selesai`, `Langkah yang disimulasikan (5):`.
+- **Usulan:** copy spesifik per alur; jangan ubah tanpa persetujuan pemilik konten.
+
+## Masih terbuka
+
+| ID | Status 2026-10-28 |
+|---|---|
+| SEO-08 (`h3` dalam `button`) | Belum diubah — Tier 2, butuh uji DOM/ARIA. |
+| SEO-09 (LCP Hero GSAP) | Belum diubah — Tier 2, butuh pengukuran. |
+| SEO-10 (link GitHub generik) | Tidak lagi berlaku: `CTASection` kini memakai anchor internal; profil GitHub di `lib/site.ts` sudah spesifik. |
+| SEO-11 (satu URL untuk semua fitur) | Tetap strategis; sitemap masih 1 URL. |
+
+## Drift data yang perlu diketahui
+- `data/flows.ts` bertambah menjadi 72 alur (laporan awal menyebut 9); `SITE_DESCRIPTION` kini 144 char dan menyebut 72 alur.
+- JSON-LD kini memuat `Offer` per paket berharga dan `sameAs` sosial dari `lib/site.ts` (perubahan di luar track SEO awal). Angka/harga tetap harus diverifikasi pemilik konten.

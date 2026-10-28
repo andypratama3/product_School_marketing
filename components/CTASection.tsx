@@ -14,7 +14,7 @@ export default function CTASection() {
       <p className="lead mu rv">
         ProductSchool adalah source code lengkap sistem sekolah — bukan SaaS terkunci. Kirim
         pesan, atau jadwalkan panggilan langsung. Inventori terkini: {inventory.features} fitur
-        dan {inventory.flows} alur terverifikasi.
+        dan {inventory.flows} alur interaktif.
       </p>
 
       <div className="cta-split rv">

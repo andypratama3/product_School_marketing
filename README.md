@@ -8,15 +8,15 @@ simulator alur interaktif dari awal sampai hasil.
 ## Isi situs
 
 - **Hero** — ringkasan + mock dashboard + tombol ke fitur dan alur.
-- **Angka utama** — 75 fitur terverifikasi, 14 kategori inti, 9 alur interaktif,
-  226 route API, 380 permission RBAC.
+- **Angka utama** — 75 fitur, 14 kategori inti, 72 alur interaktif,
+  188 endpoint API, 233 permission unik.
 - **Peta ekosistem** — 14 node kategori mengelilingi pusat ProductSchool.
   Node default **Akademik**; pertama kali peta terlihat ada intro sekali jalan
   (aktif ikut node satu-satu lalu berhenti di Akademik). Panel info mengikuti
   node yang dipilih (maks 6 fitur + sisa hitungan).
 - **Daftar fitur** — 75 fitur dengan filter kategori, klik membuka panel detail
   (pengguna, kemampuan, alur kerja, fitur sekelompok).
-- **Simulator alur** — 9 alur (CMS, pembayaran, Instagram, PPDB, payroll,
+- **Simulator alur** — 72 alur (termasuk CMS, pembayaran, Instagram, PPDB, payroll,
   kehadiran, rapor, tanda tangan, WhatsApp): panel admin vs tampilan publik,
   langkah 1..N, bisa lewat tombol, keyboard, atau scroll.
 - **Hasil + CTA** — ringkasan hasil alur, keunggulan source-code (milik penuh,
@@ -38,7 +38,7 @@ app/          layout, halaman utama, 404, CSS global
 components/   ±20 komponen (Hero, StatsBar, EcosystemMap*, FeaturesSection,
               FlowSection, ResultsSection, CTASection, SearchDialog,
               FeatureDialog, Header, Footer, RailNav, ScrollFx, Toast, ...)
-data/         features.ts (75) · categories.ts (14) · flows.ts (9) · sales.ts
+data/         features.ts (75) · categories.ts (14) · flows.ts (72) · sales.ts
 lib/          types.ts · icons.tsx · scroll.ts
 ```
 
